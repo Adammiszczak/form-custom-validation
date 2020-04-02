@@ -18,11 +18,14 @@ let imageRegex = /(\.jpg|\.png)$/;
 // validation 
 
 mainForm.addEventListener("submit", (event) => {
-        if (nameRegex.test(formName.value)) {
+        if (nameRegex.test(formName.value) && surnameRegex.test(formSurname.value) 
+        && emailRegex.test(formEmail.value) && imageRegex.test(formImage.files[0].name)) {
+            alert('Form is sent!')
             return true;
         } else {
             event.preventDefault();
             console.log("Form not submitted");
+            return false;
             
         }
 
