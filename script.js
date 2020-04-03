@@ -1,7 +1,7 @@
 // Selected elements
 
 let mainForm = document.querySelector("form#mainForm");
-let formInputs = [...document.querySelectorAll("input")];
+let formInputs = [...document.querySelectorAll("input[data-input]")];
 let formName = document.querySelector("input#formName");
 let formSurname = document.querySelector("input#formSurname");
 let formEmail = document.querySelector("input#formEmail");
@@ -15,19 +15,33 @@ let surnameRegex = /^[a-z]{3,}$/i;
 let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 let imageRegex = /(\.jpg|\.png)$/;
 
-// inputs validation
+let formRegexes = {
+    name: nameRegex,
+    surname: surnameRegex,
+    email: emailRegex,
+    image: imageRegex
+}
+ś
+let inputsValidity = {
+    name: false,
+    surname: false,
+    email: false,
+    image: false
+}
 
-formName.addEventListener("input", (event) => {
-    nameRegex.test(event.target.value);
-    console.log(nameRegex.test(event.target.value));
+formInputs.forEach(input => {
+    input.addEventListener("input", event => {
+        inputsValidity[event.target.dataset["input"]] = formRegexes[event.target.dataset["input"]].test(event.target.value);
+    })
 })
-
 
 // form validation 
 
 mainForm.addEventListener("submit", (event) => {
-        if (nameRegex.test(formName.value) && surnameRegex.test(formSurname.value) 
-        && emailRegex.test(formEmail.value) && imageRegex.test(formImage.files[0].name)) {
+        if (
+            Object.values(inputsValidity)
+            .every(item => item === true)
+        ) {
             alert('Form is sent!')
             return true;
         } else {
