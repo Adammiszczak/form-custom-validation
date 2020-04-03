@@ -10,12 +10,20 @@ let formMessage = document.querySelector("input#formMessage");
 
 //Regular expresions
 
-let nameRegex = /[a-z]{2,}/i;
-let surnameRegex = /[a-z]{3,}/i;
+let nameRegex = /^[a-z]{2,}$/i;
+let surnameRegex = /^[a-z]{3,}$/i;
 let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 let imageRegex = /(\.jpg|\.png)$/;
 
-// validation 
+// inputs validation
+
+formName.addEventListener("input", (event) => {
+    nameRegex.test(event.target.value);
+    console.log(nameRegex.test(event.target.value));
+})
+
+
+// form validation 
 
 mainForm.addEventListener("submit", (event) => {
         if (nameRegex.test(formName.value) && surnameRegex.test(formSurname.value) 
