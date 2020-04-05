@@ -52,3 +52,26 @@ form input[type="submit"]:hover {
     resize: vertical;
     width: 210px;
 }
+
+.inputError {
+    border: 2px solid red;
+}
+
+.inputCorrect {
+    border: 2px solid green;
+}
+
+
+span[data-validate] {
+    visibility: hidden;
+}
+
+span.spanCorrect {
+    visibility: visible;
+    color:green;
+}
+
+span.spanError {
+    visibility: visible;
+    color:red;
+}
