@@ -7,7 +7,7 @@ let formSurname = document.querySelector("input#formSurname");
 let formEmail = document.querySelector("input#formEmail");
 let formImage = document.querySelector("input#formImage");
 let formMessage = document.querySelector("input#formMessage");
-let spanValidation = document.querySelector("span[data-validate]");
+let spanValidation = [...document.querySelectorAll("span[data-validate]")];
 
 //Regular expresions
 
@@ -30,12 +30,20 @@ let inputsValidity = {
     image: false
 }
 
+// regex tests on every input
+
 formInputs.forEach(input => {
+
+    if (input.value === "" || input.value === null) {
+        input.setAttribute("data-inputBool", false);
+    }
+
     input.addEventListener("input", event => {
+
         inputsValidity[event.target.dataset["input"]] = formRegexes[event.target.dataset["input"]].test(event.target.value);
-        if (inputsValidity[event.target.dataset["input"]] == true) {
+        if (inputsValidity[event.target.dataset["input"]] === true) {
             event.target.setAttribute("data-inputBool", true);
-        } else {
+        } else if (inputsValidity[event.target.dataset["input"]] === false) {
             event.target.setAttribute("data-inputBool", false);
         }
     })
@@ -46,7 +54,7 @@ formInputs.forEach(input => {
 mainForm.addEventListener("submit", (event) => {
     if (
         Object.values(inputsValidity)
-        .every(item => item === true)
+            .every(item => item === true)
     ) {
         alert('Form is sent!')
 
@@ -54,17 +62,17 @@ mainForm.addEventListener("submit", (event) => {
     } else {
         event.preventDefault();
         console.log("Form not submitted");
+
         formInputs.forEach(input => {
-          if (input.getAttribute('data-inputBool') == "false") {
-            input.classList = "inputError";
-            spanValidation.classList = "spanError";
-          } else if (input.getAttribute('data-inputBool') == "true") {
-            input.classList = "inputCorrect";
-            spanValidation.classList = "spanCorrect";
-          } else {
-            input.classList = "inputError";
-            spanValidation.classList = "spanError";
-          }
+            if (input.getAttribute('data-inputBool') === "false") {
+                input.classList = "inputError";
+                spanValidation.forEach(item => item.classList = "spanError");
+            } else if (input.getAttribute('data-inputBool') === "true") {
+                input.classList = "inputCorrect";
+                // console.log(spanValidation.dataset[input.dataset["input"]]);
+                // let correctSpans = spanValidation.filter(item => item.dataset['name'])
+                spanValidation.forEach(item => item.classList = "spanCorrect");
+            }
         })
     }
     return false;
