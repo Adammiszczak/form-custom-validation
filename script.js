@@ -39,12 +39,25 @@ formInputs.forEach(input => {
     }
 
     input.addEventListener("input", event => {
-
+        let correctSpan = [...spanValidation];
+        let wrongSpan = [...spanValidation];
         inputsValidity[event.target.dataset["input"]] = formRegexes[event.target.dataset["input"]].test(event.target.value);
+
         if (inputsValidity[event.target.dataset["input"]] === true) {
             event.target.setAttribute("data-inputBool", true);
-        } else if (inputsValidity[event.target.dataset["input"]] === false) {
+            correctSpan = correctSpan.find((item) => {
+                return item.dataset[event.target.dataset["input"]]
+            });
+            correctSpan.setAttribute("data-inputBool", true);
+            console.log(correctSpan)
+
+        } 
+        else if (inputsValidity[event.target.dataset["input"]] === false) {
             event.target.setAttribute("data-inputBool", false);
+            wrongSpan = wrongSpan.find((item) => {
+                return item.dataset[event.target.dataset["input"]]
+            });
+            wrongSpan.setAttribute("data-inputBool", false);
         }
     })
 })
@@ -69,8 +82,7 @@ mainForm.addEventListener("submit", (event) => {
                 spanValidation.forEach(item => item.classList = "spanError");
             } else if (input.getAttribute('data-inputBool') === "true") {
                 input.classList = "inputCorrect";
-                // console.log(spanValidation.dataset[input.dataset["input"]]);
-                // let correctSpans = spanValidation.filter(item => item.dataset['name'])
+
                 spanValidation.forEach(item => item.classList = "spanCorrect");
             }
         })
