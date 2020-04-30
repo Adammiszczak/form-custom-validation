@@ -79,11 +79,20 @@ mainForm.addEventListener("submit", (event) => {
         formInputs.forEach(input => {
             if (input.getAttribute('data-inputBool') === "false") {
                 input.classList = "inputError";
-                spanValidation.forEach(item => item.classList = "spanError");
+                for (wrongSpan of spanValidation) {
+                    if(wrongSpan.getAttribute('data-inputBool') === "false" || 
+                    wrongSpan.getAttribute('data-inputBool') === null) {
+                        wrongSpan.classList = "spanError";
+                    }
+                }
             } else if (input.getAttribute('data-inputBool') === "true") {
                 input.classList = "inputCorrect";
+                for (correctSpan of spanValidation) {
+                    if(correctSpan.getAttribute('data-inputBool') === "true") {
+                        correctSpan.classList = "spanCorrect";
+                    }
+                }
 
-                spanValidation.forEach(item => item.classList = "spanCorrect");
             }
         })
     }
