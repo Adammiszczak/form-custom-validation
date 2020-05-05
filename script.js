@@ -30,6 +30,19 @@ let inputsValidity = {
     image: false
 }
 
+// Spans comments
+
+let spanComments = {
+    empty: "The input value is empty",
+    correct: "Correct",
+    wrong: {
+        name: "The name has wrong format",
+        surname: "The surname has wrong format",
+        email: "The email has wrong format",
+        image: "The image has wrong extension",
+    }
+}
+
 // regex tests on every input
 
 formInputs.forEach(input => {
@@ -43,21 +56,26 @@ formInputs.forEach(input => {
         let wrongSpan = [...spanValidation];
         inputsValidity[event.target.dataset["input"]] = formRegexes[event.target.dataset["input"]].test(event.target.value);
 
+// check true values from regex and adding spans dataset
+
         if (inputsValidity[event.target.dataset["input"]] === true) {
             event.target.setAttribute("data-inputBool", true);
             correctSpan = correctSpan.find((item) => {
                 return item.dataset[event.target.dataset["input"]]
             });
             correctSpan.setAttribute("data-inputBool", true);
-            console.log(correctSpan)
 
         } 
+
+// check false values from regex and adding spans dataset
+
         else if (inputsValidity[event.target.dataset["input"]] === false) {
             event.target.setAttribute("data-inputBool", false);
             wrongSpan = wrongSpan.find((item) => {
                 return item.dataset[event.target.dataset["input"]]
             });
             wrongSpan.setAttribute("data-inputBool", false);
+            wrongSpan.innerHTML = spanComments['wrong'][event.target.dataset["input"]];
         }
     })
 })
@@ -65,6 +83,8 @@ formInputs.forEach(input => {
 // form validation 
 
 mainForm.addEventListener("submit", (event) => {
+
+// check if all inputs return true from regex    
     if (
         Object.values(inputsValidity)
             .every(item => item === true)
@@ -73,18 +93,27 @@ mainForm.addEventListener("submit", (event) => {
 
         return true;
     } else {
+
+// logic if not all inputs return true from regex        
         event.preventDefault();
         console.log("Form not submitted");
 
         formInputs.forEach(input => {
+
+// dealing with inputs which returned false with spans  
+
             if (input.getAttribute('data-inputBool') === "false") {
                 input.classList = "inputError";
                 for (wrongSpan of spanValidation) {
-                    if(wrongSpan.getAttribute('data-inputBool') === "false" || 
-                    wrongSpan.getAttribute('data-inputBool') === null) {
+                    if(wrongSpan.getAttribute('data-inputBool') === "false") {
                         wrongSpan.classList = "spanError";
+                    } else if ( wrongSpan.getAttribute('data-inputBool') === null) {
+                        wrongSpan.classList = "spanError";
+                        wrongSpan.innerText = "Input value is missing"  
                     }
                 }
+// dealing with inputs which returned true with spans   
+
             } else if (input.getAttribute('data-inputBool') === "true") {
                 input.classList = "inputCorrect";
                 for (correctSpan of spanValidation) {
