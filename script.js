@@ -48,26 +48,37 @@ let spanComments = {
 formInputs.forEach(input => {
 
     if (input.value === "" || input.value === null) {
-        input.setAttribute("data-inputBool", false);
+        input.setAttribute("data-inputBool", "false");
     }
 
     input.addEventListener("input", event => {
+
+
         let correctSpan = [...spanValidation];
         let wrongSpan = [...spanValidation];
+        let emptySpan = [...spanValidation];
         inputsValidity[event.target.dataset["input"]] = formRegexes[event.target.dataset["input"]].test(event.target.value);
 
-// check true values from regex and adding spans dataset
+        // check empty values and adding spans dataset
+        if (event.target.value === "" || event.target.value === null) {
+            event.target.setAttribute("data-inputBool", "empty");
+            emptySpan = emptySpan.find((item) => {
+                return item.dataset[event.target.dataset["input"]]
+            });
+            emptySpan.setAttribute("data-inputBool", "empty");
+        }  
 
-        if (inputsValidity[event.target.dataset["input"]] === true) {
+        // check true values from regex and adding spans dataset
+        else if (inputsValidity[event.target.dataset["input"]] === true) {
             event.target.setAttribute("data-inputBool", true);
             correctSpan = correctSpan.find((item) => {
                 return item.dataset[event.target.dataset["input"]]
             });
             correctSpan.setAttribute("data-inputBool", true);
 
-        } 
+        }
 
-// check false values from regex and adding spans dataset
+        // check false values from regex and adding spans dataset
 
         else if (inputsValidity[event.target.dataset["input"]] === false) {
             event.target.setAttribute("data-inputBool", false);
@@ -75,8 +86,8 @@ formInputs.forEach(input => {
                 return item.dataset[event.target.dataset["input"]]
             });
             wrongSpan.setAttribute("data-inputBool", false);
-            wrongSpan.innerHTML = spanComments['wrong'][event.target.dataset["input"]];
-        }
+            // wrongSpan.innerHTML = spanComments['wrong'][event.target.dataset["input"]];
+        } 
     })
 })
 
@@ -84,7 +95,7 @@ formInputs.forEach(input => {
 
 mainForm.addEventListener("submit", (event) => {
 
-// check if all inputs return true from regex    
+    // check if all inputs return true from regex    
     if (
         Object.values(inputsValidity)
             .every(item => item === true)
@@ -94,31 +105,40 @@ mainForm.addEventListener("submit", (event) => {
         return true;
     } else {
 
-// logic if not all inputs return true from regex        
+        // logic if not all inputs return true from regex        
         event.preventDefault();
         console.log("Form not submitted");
 
         formInputs.forEach(input => {
 
-// dealing with inputs which returned false with spans  
-
+            // dealing with inputs which returned false with spans  
             if (input.getAttribute('data-inputBool') === "false") {
                 input.classList = "inputError";
                 for (wrongSpan of spanValidation) {
-                    if(wrongSpan.getAttribute('data-inputBool') === "false") {
+                    if (wrongSpan.getAttribute('data-inputBool') === "false") {
                         wrongSpan.classList = "spanError";
-                    } else if ( wrongSpan.getAttribute('data-inputBool') === null) {
+                        wrongSpan.innerText = spanComments['wrong'][wrongSpan.dataset["comment"]] ;
+                    } else if (wrongSpan.getAttribute('data-inputBool') === null) {
                         wrongSpan.classList = "spanError";
                         wrongSpan.innerText = "Input value is missing"  
                     }
                 }
-// dealing with inputs which returned true with spans   
+                // dealing with inputs which returned true with spans   
 
+            } else if (input.getAttribute('data-inputBool') === "empty") {
+                input.classList = "inputError";
+                for (emptySpan of spanValidation) {
+                    if (emptySpan.getAttribute('data-inputBool') === "empty") {
+                        emptySpan.classList = "spanError";
+                        emptySpan.innerText = "Input value is missing" 
+                    }
+                }
             } else if (input.getAttribute('data-inputBool') === "true") {
                 input.classList = "inputCorrect";
                 for (correctSpan of spanValidation) {
-                    if(correctSpan.getAttribute('data-inputBool') === "true") {
+                    if (correctSpan.getAttribute('data-inputBool') === "true") {
                         correctSpan.classList = "spanCorrect";
+                        correctSpan.innerText = "Correct Value" 
                     }
                 }
 
