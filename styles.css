@@ -1,0 +1,85 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+  font-family: "Chakra Petch", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background-color: #000000;
+  background-image: linear-gradient(315deg, #000000 0%, #7f8c8d 74%);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+}
+
+body form {
+  display: -ms-grid;
+  display: grid;
+  justify-items: center;
+  row-gap: 10px;
+}
+
+body form label {
+  font-weight: bold;
+}
+
+body form input {
+  display: block;
+  font-size: 16px;
+  padding: 5px;
+  border-width: 3px;
+  border-style: inset;
+  background-color: #ffffff;
+  border-color: #f5f5f5;
+  width: 200px;
+}
+
+body form input[type="submit"]:hover {
+  cursor: pointer;
+}
+
+body form #formMessage {
+  resize: vertical;
+  width: 210px;
+}
+
+body form input.inputError {
+  border: 2px solid red;
+}
+
+body form input.inputCorrect {
+  border: 2px solid green;
+}
+
+body span[data-validate] {
+  visibility: hidden;
+}
+
+body span.spanCorrect {
+  visibility: visible;
+  color: green;
+}
+
+body span.spanError {
+  visibility: visible;
+  color: red;
+}
+/*# sourceMappingURL=styles.css.map */
