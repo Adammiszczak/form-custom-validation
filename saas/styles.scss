@@ -1,3 +1,6 @@
+@import "variables";
+@import "validation";
+
 html,
 body {
     margin: 0;
@@ -12,7 +15,7 @@ body {
 
 body {
     min-height: 100vh;
-    background-color: #000000;
+    background-color: black;
     background-image: linear-gradient(315deg, #000000 0%, #7f8c8d 74%);
     display: flex;
     flex-direction: column;
@@ -49,26 +52,6 @@ body {
             width: 210px;
         }
 
-        input.inputError {
-            border: 2px solid red;
-        }
-
-        input.inputCorrect {
-            border: 2px solid green;
-        }
     }
 
-    span[data-validate] {
-        visibility: hidden;
-    }
-
-    span.spanCorrect {
-        visibility: visible;
-        color: green;
-    }
-
-    span.spanError {
-        visibility: visible;
-        color: red;
-    }
 }

@@ -1,0 +1,23 @@
+body {
+    span[data-validate] {
+        visibility: hidden;
+    }
+
+    span.spanCorrect {
+        visibility: visible;
+        color: $correct-value-color;
+    }
+
+    span.spanError {
+        visibility: visible;
+        color: $wrong-value-color;
+    }
+
+    input.inputError {
+        border: 2px solid $wrong-value-color;
+    }
+
+    input.inputCorrect {
+        border: 2px solid $correct-value-color;
+    }
+}

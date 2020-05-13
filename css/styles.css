@@ -1,3 +1,25 @@
+body span[data-validate] {
+  visibility: hidden;
+}
+
+body span.spanCorrect {
+  visibility: visible;
+  color: #3cff3c;
+}
+
+body span.spanError {
+  visibility: visible;
+  color: red;
+}
+
+body input.inputError {
+  border: 2px solid red;
+}
+
+body input.inputCorrect {
+  border: 2px solid #3cff3c;
+}
+
 html,
 body {
   margin: 0;
@@ -12,7 +34,7 @@ body {
 
 body {
   min-height: 100vh;
-  background-color: #000000;
+  background-color: black;
   background-image: linear-gradient(315deg, #000000 0%, #7f8c8d 74%);
   display: -webkit-box;
   display: -ms-flexbox;
@@ -59,27 +81,5 @@ body form input[type="submit"]:hover {
 body form #formMessage {
   resize: vertical;
   width: 210px;
-}
-
-body form input.inputError {
-  border: 2px solid red;
-}
-
-body form input.inputCorrect {
-  border: 2px solid green;
-}
-
-body span[data-validate] {
-  visibility: hidden;
-}
-
-body span.spanCorrect {
-  visibility: visible;
-  color: green;
-}
-
-body span.spanError {
-  visibility: visible;
-  color: red;
 }
 /*# sourceMappingURL=styles.css.map */
